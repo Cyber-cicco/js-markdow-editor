@@ -5,13 +5,65 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="keywords" content="HTML, CSS, XML, XHTML, JavaScript">
-  <title>HTML5 Boilerplate</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Markdown text editor</title>
+  <link rel="stylesheet" href="styles/output.css">
   <link rel="manifest" href="app.webmanifest">
 </head>
 
-<body>
-  <h1>Page Title</h1>
+<body class="flex h-screen bg-grey p-5 w-full justify-center">
+    <main class="flex flex-col w-1/2 h-full items-center">
+        <div class="bg-white w-full h-full rounded-lg shadow-md">
+            <div class="flex flex-col h-full">
+                <div class="flex w-full flex-wrap gap-5 items-center p-5">
+                    <button data-text-option class="hover:bg-grey h-[30px] border-2 rounded-md" id="bold">
+                        <img src="img/bold.svg">
+                    </button>
+                    <button data-text-option id="italic" class="hover:bg-grey border-2 h-[30px] rounded-md">
+                        <img src="img/italic.svg">
+                    </button>
+                    <button data-text-option id="strikethrough" class="hover:bg-grey h-[30px] border-2 rounded-md">
+                        <img src="img/strikethrough.svg">
+                    </button>
+                    <button data-text-option id="list" class="hover:bg-grey h-[30px] border-2 rounded-md">
+                        <img src="img/list.svg">
+                    </button>
+                    <button data-text-option id="ordered-list" class="hover:bg-grey h-[30px] border-2 rounded-md">
+                        <img src="img/ordered-list.svg">
+                    </button>
+                    <button data-text-option id="undo" class="hover:bg-grey h-[30px] border-2 rounded-md">
+                        <img src="img/undo.svg">
+                    </button>
+                    <button data-text-option id="redo" class="hover:bg-grey h-[30px] border-2 rounded-md">
+                        <img src="img/redo.svg">
+                    </button>
+                    <button data-text-option id="link" class="hover:bg-grey h-[30px] border-2 rounded-md">
+                        <img src="img/link.svg">
+                    </button>
+                    <button data-text-option id="delink" class="hover:bg-grey border-2 h-[30px] rounded-md">
+                        <img src="img/delink.svg">
+                    </button>
+                    <button data-text-option id="table" class="hover:bg-grey h-[30px] border-2 rounded-md">
+                        <img src="img/table.svg">
+                    </button>
+                    <button data-text-option id="title" class="hover:bg-grey h-[30px] border-2 rounded-md">
+                        <img src="img/title.svg">
+                    </button>
+                    <select id="heading" class="w-[200px] p-2 rounded-md bg-grey hover:cursor-pointer">
+                        <option class="hover:cursor-pointer text-primary font-poppins text-5xl" value="h1">Gros titre</option>
+                        <option class="hover:cursor-pointer text-primary font-poppins text-3xl" value="h2">Titre</option>
+                        <option class="hover:cursor-pointer text-primary font-poppins text-xl" value="h3">Sous titre</option>
+                    </select>
+                </div> 
+                <div class="bg-greyDeep h-0.5 w-full"></div>
+                <div class="p-5 flex flex-col h-full">
+                    <textarea id="text-input" class="border-grey border-2 rounded-md p-2 h-full"></textarea>
+                </div>
+                <div id="buttons" class="p-5">
+                    <button class="bg-lightPrimary p-2 text-white disabled:brightness-75 rounded-md hover:cursor-pointer hover:brightness-150">Publier</button>
+                </div>
+            </div>
+        </div>
+    </main>
   <script src="index.js"></script>
 </body>
 
