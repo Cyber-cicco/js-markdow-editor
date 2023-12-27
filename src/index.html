@@ -10,11 +10,11 @@
   <link rel="manifest" href="app.webmanifest">
 </head>
 
-<body class="flex h-screen bg-grey p-5 w-full justify-center">
+<body class="flex h-screen bg-grey p-3 w-full justify-center">
     <main class="flex flex-col w-1/2 h-full items-center">
         <div class="bg-white w-full h-full rounded-lg shadow-md">
             <div class="flex flex-col h-full">
-                <div class="flex w-full flex-wrap gap-5 items-center p-5">
+                <div class="flex w-full flex-wrap gap-3 items-center p-3">
                     <button data-text-option
                         data-tooltip-target="tooltip-bold"
                         class="hover:bg-grey h-[30px] border-2 rounded-md"
@@ -128,36 +128,22 @@
                         <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>
                     <button data-text-option
-                        data-tooltip-target="tooltip-delink"
-                        id="delink"
-                        class="hover:bg-grey border-2 h-[30px] rounded-md"
-                        >
-                        <img src="img/delink.svg">
-                    </button>
-                    <div id="tooltip-delink"
-                        role="tooltip"
-                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-dark rounded-lg shadow-sm opacity-0 tooltip"
-                        >
-                        Supprimer un lien
-                        <div class="tooltip-arrow" data-popper-arrow></div>
-                    </div>
-                    <button 
-                        data-tooltip-target="tooltip-tableau"
-                        data-text-option id="table"
+                        data-tooltip-target="tooltip-code-line"
+                        id="code-line"
                         class="hover:bg-grey h-[30px] border-2 rounded-md"
                         >
-                        <img src="img/table.svg">
+                        <img src="img/code-line.svg">
                     </button>
-                    <div id="tooltip-tableau"
+                    <div id="tooltip-code-line"
                         role="tooltip"
                         class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-dark rounded-lg shadow-sm opacity-0 tooltip"
                         >
-                        Insérer un tableau
+                        Insérer du code
                         <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>
                 </div> 
                 <div class="bg-greyDeep h-0.5 w-full"></div>
-                <div class="flex w-full flex-wrap gap-5 items-center p-5">
+                <div class="flex w-full flex-wrap gap-3 items-center p-3">
                     <button data-text-option
                         data-tooltip-target="tooltip-title"
                         id="title"
@@ -177,11 +163,53 @@
                         <option class="hover:cursor-pointer text-primary font-poppins text-3xl" value="h2">Titre</option>
                         <option class="hover:cursor-pointer text-primary font-poppins text-xl" value="h3">Sous titre</option>
                     </select>
+                    <button 
+                        data-tooltip-target="tooltip-tableau"
+                        data-text-option id="table"
+                        class="hover:bg-grey h-[30px] border-2 rounded-md"
+                        >
+                        <img src="img/table.svg">
+                    </button>
+                    <div id="tooltip-tableau"
+                        role="tooltip"
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-dark rounded-lg shadow-sm opacity-0 tooltip"
+                        >
+                        Insérer un tableau
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                    <button data-text-option
+                        data-tooltip-target="tooltip-citation"
+                        id="citation"
+                        class="hover:bg-grey h-[30px] border-2 rounded-md"
+                        >
+                        <img src="img/quote.svg">
+                    </button>
+                    <div id="tooltip-citation"
+                        role="tooltip"
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-dark rounded-lg shadow-sm opacity-0 tooltip"
+                        >
+                        Insérer une citation
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                    <button data-text-option
+                        data-tooltip-target="tooltip-code-block"
+                        id="code-block"
+                        class="hover:bg-grey h-[30px] border-2 rounded-md"
+                        >
+                        <img src="img/code-block.svg">
+                    </button>
+                    <div id="tooltip-code-block"
+                        role="tooltip"
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-dark rounded-lg shadow-sm opacity-0 tooltip"
+                        >
+                        Insérer un bloque de code
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
                 </div>
-                <div class="p-5 flex flex-col h-full">
+                <div class="p-3 flex flex-col h-full">
                     <textarea id="text-input" onkeyup="putInHistory()" class="border-grey border-2 rounded-md p-2 h-full"></textarea>
                 </div>
-                <div id="buttons" class="p-5">
+                <div id="buttons" class="p-3">
                     <button class="bg-lightPrimary p-2 text-white disabled:brightness-75 rounded-md hover:cursor-pointer hover:brightness-150">Publier</button>
                 </div>
             </div>

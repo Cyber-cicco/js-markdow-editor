@@ -7,9 +7,13 @@ let ol = document.querySelector("#ordered-list")
 let undo = document.querySelector("#undo")
 let redo = document.querySelector("#redo")
 let link = document.querySelector("#link")
-let delink = document.querySelector("#delink")
+let codeLine = document.querySelector("#code-line")
 let table = document.querySelector("#table")
 let title = document.querySelector("#title")
+let titleSelect = document.querySelector("#heading")
+let tableau = document.querySelector("#table")
+let citation = document.querySelector("#citation")
+let codeBlock = document.querySelector("#code-block")
 let writingArea = document.getElementById("text-input")
 
 const middle = 1;
@@ -48,6 +52,8 @@ bold.addEventListener("click", (e) => {
             } else {
                 contentAsArray[middle] = "**" + contentAsArray[middle] + "**"
             }
+        }, () => {
+            return "** bold **";
         })
 });
 
@@ -59,6 +65,8 @@ italic.addEventListener("click", (e) => {
                 } else {
                     contentAsArray[middle] = "*" + contentAsArray[middle] + "*"
                 }
+        }, () => {
+            return "* italic *";
         })
 })
 
@@ -70,6 +78,8 @@ strikethrough.addEventListener("click", (e) => {
                 } else {
                     contentAsArray[middle] = "~~" + contentAsArray[middle] + "~~"
                 }
+        }, () => {
+            return "~~strikethrough~~";
         })
 })
 
@@ -121,6 +131,111 @@ redo.addEventListener("click", () => {
     }
 })
 
+link.addEventListener('click', () => {
+    changeSelection(
+        (contentAsArray) => {
+            contentAsArray[middle] = "(" + contentAsArray[middle] + ")[https://www.example.com]"
+        }, () => {
+            return "(your link text)[https://www.example.com]"
+        }
+    )
+})
+
+codeLine.addEventListener("click", () => {
+    changeSelection(
+        (contentAsArray) => {
+            if(contentAsArray[middle].startsWith("`") && contentAsArray[middle].endsWith("`")) {
+                contentAsArray[middle] = contentAsArray[middle].substring(1, contentAsArray[middle].length)
+                contentAsArray[middle] = contentAsArray[middle].substring(0, contentAsArray[middle].length - 1)
+                return;
+            }
+            contentAsArray[middle] = "`" + contentAsArray[middle] + "`"
+        }, () => {
+            return '`print("Hello World")`'
+        }
+    )
+})
+
+title.addEventListener('click', () => {
+    let heading;
+    switch (titleSelect.value) {
+        case ("h1") : {
+            heading = "#"
+            break;
+        }
+        case ("h2") : {
+            heading = "##"
+            break;
+        }
+        case ("h3") : {
+            heading = "###"
+            break;
+        }
+        case ("h4") : {
+            heading = "####"
+            break;
+        }
+    }
+    changeLine(
+        (content) => {
+            let i = 0;
+            for(i = 0; i < content.length && content.charAt(i) == " "; i++){}
+            content = content.substring(i);
+            if(content.startsWith(heading + " ")) {
+                return content.substring(heading.length);
+            } 
+            return heading + " " + content;
+        },
+        () => {
+            return "\n" + heading + " "
+        }
+    )
+})
+
+tableau.addEventListener('click', () => {
+    const del1 = writingArea.selectionStart;
+    let areaValue = writingArea.value;
+    let text = `
+| En tête 1 | En tête 2 | En tête 3 |
+|-----------|-----------|-----------|
+|row 1 col 1|row 1 col 2|row 1 col 3|
+`
+    contentAsArray = [
+        areaValue.substring(0, del1),
+        text,
+        areaValue.substring(del1, areaValue.length),
+    ]
+    writingArea.value = contentAsArray.join("");
+})
+
+citation.addEventListener('click', () => {
+    changeLine(
+        (content) => {
+            let i = 0;
+            for(i = 0; i < content.length && content.charAt(i) == " "; i++){}
+            content = content.substring(i);
+            if(content.startsWith("> ")) {
+                return content.substring(2);
+            } 
+            return "> " + content;
+        },
+        () => {
+            return "\n> "
+        }
+    )
+})
+
+codeBlock.addEventListener('click', () => {
+    changeLine(
+        (content) => {
+            return '\n```python\n' + content + '\n```\n';
+        },
+        () => {
+            return '\n```python\nprint("hello world")\n```\n';
+        }
+    )
+})
+
 const changeLine = (changer, creer) => {
     let text = writingArea.value;
     const areaValue = text;
@@ -151,7 +266,7 @@ const changeLine = (changer, creer) => {
 
 }
 
-const changeSelection = (ajouter) => {
+const changeSelection = (changer, creer) => {
     let text;
     let selection;
     const del1 = writingArea.selectionStart;
@@ -164,9 +279,17 @@ const changeSelection = (ajouter) => {
             innerText,
             text.substring(del2, text.length),
         ]
-        ajouter(contentAsArray);
+        changer(contentAsArray);
         writingArea.value = contentAsArray.join("");
-    }
+        return;
+    } 
+    let content = creer();
+    let contentAsArray = [
+        text.substring(0, del1),
+        content,
+        text.substring(del2, text.length),
+    ]
+    writingArea.value = contentAsArray.join("");
 }
 
 
