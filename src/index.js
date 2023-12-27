@@ -14,8 +14,30 @@ let writingArea = document.getElementById("text-input")
 
 const middle = 1;
 
+let textHistory = [writingArea.value]
+let historyPointer = 0;
+
+textOptions.forEach(option => {
+    option.addEventListener("click", ()=>{
+        pushHistory(writingArea.value)
+    })
+})
+
 const intializer = () => {
         
+}
+
+let numToCheckForChange;
+
+const putInHistory = ()=> {
+    const randNum = Math.random()
+    const areaValue = writingArea.value;
+    numToCheckForChange = randNum;
+    setTimeout(()=> {
+        if (randNum == numToCheckForChange) {
+            pushHistory(areaValue)
+        }
+    }, 500);
 }
 
 bold.addEventListener("click", (e) => {
@@ -62,20 +84,50 @@ list.addEventListener("click", (e) => {
             } 
             return "- " + content;
         },
-        (content) => {
-            return content + "\n- "
+        () => {
+            return "\n- "
         }
     );
 })
 
+ol.addEventListener("click", (e) => {
+    changeLine(
+        (content) => {
+            let i = 0;
+            for(i = 0; i < content.length && content.charAt(i) == " "; i++){}
+            content = content.substring(i);
+            if(content.startsWith("1. ")) {
+                return content.substring(2);
+            } 
+            return "1. " + content;
+        },
+        () => {
+            return "\n1. "
+        }
+    )
+})
+
+undo.addEventListener("click", () => {
+    if(historyPointer > 0) {
+        historyPointer--;
+        writingArea.value = textHistory[historyPointer];
+    }
+})
+
+redo.addEventListener("click", () => {
+    if(historyPointer < textHistory.length - 1) {
+        historyPointer++;
+        writingArea.value = textHistory[historyPointer]
+    }
+})
 
 const changeLine = (changer, creer) => {
     let text = writingArea.value;
+    const areaValue = text;
     const del1 = writingArea.selectionStart;
     const del2 = writingArea.selectionEnd;
     let contentAsArray = []
     if(del1 != del2) {
-        let areaValue = text;
         let i;
         for(i = del1; i >= 0 && text.charAt(i) != '\n'; i--) {}
         text = text.substring(i+1, del2);
@@ -86,8 +138,12 @@ const changeLine = (changer, creer) => {
             areaValue.substring(del2, areaValue.length),
         ]
     } else {
-        text = creer(text)
-        contentAsArray = [text]
+        text = creer()
+        contentAsArray = [
+            areaValue.substring(0, del1),
+            text,
+            areaValue.substring(del1, areaValue.length)
+        ]
     }
     writingArea.value = contentAsArray.join("");
 
@@ -113,18 +169,22 @@ const changeSelection = (ajouter) => {
     }
 }
 
+
 /**
 */
 const pushHistory = (content) => {
     if(textHistory.length > historyPointer + 1) {
-        textHistory = textHistory.slice(0, historyPointer);
+        textHistory = textHistory.slice(0, historyPointer+1);
         textHistory.push(content);
+        historyPointer = textHistory.length - 1;
         return; 
     }
-    textHistory.push;
+    if(textHistory.length >= 10) {
+        textHistory.unshift()
+        textHistory.push(content);
+        return;
+    }
+    textHistory.push(content);
+    historyPointer++;
 }
 
-
-const highlighter = () => {
-    
-}
